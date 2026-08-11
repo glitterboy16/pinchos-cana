@@ -78,6 +78,26 @@ en blanco delante de un cliente.
 Producción en **Vercel** (framework detectado: Vite). Hay que configurar allí
 las mismas variables de entorno.
 
+### Latido diario (para que Supabase no se pause)
+
+El plan gratuito de Supabase **pausa un proyecto tras 7 días sin actividad**, y
+despertarlo hay que hacerlo a mano desde el panel. Para que eso no pase nunca,
+`api/keepalive.js` hace una consulta a `site_content` y el cron de Vercel lo
+llama **una vez al día** (`0 6 * * *`, ver `crons` en `vercel.json`).
+
+El endpoint exige la cabecera `Authorization: Bearer $CRON_SECRET`, que Vercel
+manda sola en sus crons. La variable `CRON_SECRET` ya está en el proyecto de
+Vercel; si la cambias, hay que volver a desplegar para que la función la coja.
+
+Comprobar a mano que sigue vivo:
+
+```bash
+curl -H "Authorization: Bearer $CRON_SECRET" https://pinchos-cana.vercel.app/api/keepalive
+# {"ok":true,"estado":200,"ms":420,"cuando":"..."}
+```
+
+La web en sí no necesita esto: Vercel sirve estáticos y no se apaga nunca.
+
 ---
 
 ## Cómo está montado
