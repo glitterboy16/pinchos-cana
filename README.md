@@ -12,7 +12,7 @@ React + Vite + Tailwind v4 + Supabase.
 
 1. Abre la web en el móvil y baja del todo, hasta el pie de página.
 2. Pulsa el nombre **Pinchos Caña** que hay junto al ©.
-3. Entra con tu usuario (`admin`) y tu contraseña.
+3. Entra con el usuario `pinchos` y tu contraseña.
 4. Aparece abajo a la derecha el botón **Editar carta**. Púlsalo y ya puedes:
    - Cambiar nombres, precios, medias raciones y descripciones.
    - Añadir o borrar platos y categorías completas.
@@ -64,9 +64,9 @@ desde la web.
    (lectura pública, escritura solo para usuarios autenticados) y activa la
    sincronización en vivo entre dispositivos.
 2. En **Authentication → Users → Add user**, con *Auto Confirm User* activado:
-   - Email: `admin@acceso.pinchoscana.local`
+   - Email: `pinchos@acceso.pinchoscana.local`
    - Password: la que elijas
-3. En la web se entra escribiendo solo `admin` y esa contraseña.
+3. En la web se entra escribiendo solo `pinchos` y esa contraseña.
 
 La carta entera vive en **una sola fila** de `site_content`, en formato JSON.
 Si Supabase no responde, la web sigue funcionando con la última carta que vio

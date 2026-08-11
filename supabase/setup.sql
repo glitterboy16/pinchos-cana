@@ -43,8 +43,8 @@ end $$;
 -- No se crea por SQL: hazlo en Authentication → Users → "Add user",
 -- con "Auto Confirm User" activado y estos datos:
 --
---   Email:    admin@acceso.pinchoscana.local
+--   Email:    pinchos@acceso.pinchoscana.local
 --   Password: (la que elijas)
 --
--- En la web se entra escribiendo solo "admin" y esa contraseña.
+-- En la web se entra escribiendo solo "pinchos" y esa contraseña.
 -- ─────────────────────────────────────────────────────────────────────────
