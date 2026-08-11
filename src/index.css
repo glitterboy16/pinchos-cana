@@ -1,0 +1,259 @@
+@import "tailwindcss";
+
+/* Fuentes self-hosted (sin CDN de Google → sin banner de cookies) */
+@import "@fontsource/abril-fatface/400.css";
+@import "@fontsource/oswald/300.css";
+@import "@fontsource/oswald/400.css";
+@import "@fontsource/oswald/500.css";
+@import "@fontsource/lora/400.css";
+@import "@fontsource/lora/400-italic.css";
+@import "@fontsource/lora/600.css";
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Paleta tomada del propio logo: papel crema, tinta negra de sello,
+   terracota de las estrellas y ámbar de brasa.
+   ───────────────────────────────────────────────────────────────────────── */
+@theme {
+  --color-papel-50: #fcf7f2;
+  --color-papel-100: #f6eae0;
+  --color-papel-200: #eddccf;
+  --color-papel-300: #dfc7b6;
+  --color-papel-400: #c9ab98;
+
+  --color-tinta-950: #12100f;
+  --color-tinta-900: #1e1817;
+  --color-tinta-800: #2c2422;
+  --color-tinta-700: #453733;
+  --color-tinta-600: #6b5651;
+
+  --color-teja-200: #f0cabd;
+  --color-teja-300: #e3a897;
+  --color-teja-400: #ce8674;
+  --color-teja-500: #b9634f;
+  --color-teja-600: #9c4c3a;
+
+  --color-brasa-400: #e39a46;
+  --color-brasa-500: #ce7f2c;
+
+  --font-display: "Abril Fatface", "Playfair Display", Georgia, serif;
+  --font-cond: "Oswald", "Arial Narrow", system-ui, sans-serif;
+  --font-body: "Lora", Georgia, serif;
+}
+
+/* ── Base ──────────────────────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 5.5rem;
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  color: var(--color-tinta-900);
+  font-family: var(--font-body);
+  background-color: var(--color-papel-100);
+  background-image:
+    radial-gradient(1100px 620px at 50% -12%, rgba(206, 134, 116, 0.22), transparent 62%),
+    radial-gradient(760px 480px at 105% 8%, rgba(227, 154, 70, 0.16), transparent 58%),
+    radial-gradient(900px 700px at -10% 100%, rgba(185, 99, 79, 0.12), transparent 60%);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+/* Grano de papel impreso — SVG inline, sin peticiones extra */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.16;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+::selection {
+  background: var(--color-teja-400);
+  color: var(--color-papel-50);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-teja-500);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-papel-200);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-teja-400);
+  border-radius: 99px;
+  border: 2px solid var(--color-papel-200);
+}
+
+/* Precios siempre alineados */
+.tabular {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Lunares de mantón — decoración del pie */
+.lunares {
+  background-image: radial-gradient(currentColor 1.4px, transparent 1.5px);
+  background-size: 16px 16px;
+}
+
+/* ── Animaciones ───────────────────────────────────────────────────────── */
+@keyframes sello {
+  0% {
+    opacity: 0;
+    transform: scale(0.78) rotate(-9deg);
+  }
+  62% {
+    opacity: 1;
+    transform: scale(1.045) rotate(2.5deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+}
+
+@keyframes subir {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes llama {
+  0%,
+  100% {
+    transform: scaleY(1) translateY(0);
+    opacity: 0.92;
+  }
+  22% {
+    transform: scaleY(1.1) translateY(-2px) skewX(2deg);
+    opacity: 1;
+  }
+  48% {
+    transform: scaleY(0.93) translateY(1px) skewX(-2deg);
+    opacity: 0.82;
+  }
+  74% {
+    transform: scaleY(1.06) translateY(-1px) skewX(1deg);
+    opacity: 1;
+  }
+}
+
+@keyframes vaiven {
+  0%,
+  100% {
+    transform: rotate(-3.5deg);
+  }
+  50% {
+    transform: rotate(3.5deg);
+  }
+}
+
+@keyframes flotar {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+@keyframes trazo {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.anim-sello {
+  animation: sello 900ms cubic-bezier(0.22, 1, 0.3, 1) both;
+}
+.anim-llama {
+  transform-origin: 50% 100%;
+  animation: llama 2.6s ease-in-out infinite;
+}
+.anim-vaiven {
+  transform-origin: 50% 0%;
+  animation: vaiven 5.5s ease-in-out infinite;
+}
+.anim-flotar {
+  animation: flotar 6s ease-in-out infinite;
+}
+.anim-subir {
+  animation: subir 620ms cubic-bezier(0.22, 0.75, 0.3, 1) both;
+}
+
+/* Aparición al hacer scroll (IntersectionObserver) */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 720ms cubic-bezier(0.22, 0.75, 0.3, 1),
+    transform 720ms cubic-bezier(0.22, 0.75, 0.3, 1);
+  transition-delay: var(--d, 0ms);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Línea de puntos que une plato y precio */
+.leader {
+  flex: 1 1 auto;
+  min-width: 1rem;
+  height: 0;
+  margin: 0 0.5rem;
+  transform: translateY(-0.3rem) scaleX(1);
+  transform-origin: left;
+  border-bottom: 1px dotted color-mix(in srgb, var(--color-tinta-600) 45%, transparent);
+}
+.abierta .leader {
+  animation: trazo 700ms cubic-bezier(0.22, 0.75, 0.3, 1) both;
+}
+
+/* ── Accesibilidad: sin movimiento si el sistema lo pide ───────────────── */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

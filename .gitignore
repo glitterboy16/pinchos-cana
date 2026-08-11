@@ -1,0 +1,22 @@
+node_modules
+dist
+dist-ssr
+*.local
+
+# Entorno / secretos
+.env
+.env.local
+.env.*.local
+
+# Vercel
+.vercel
+
+# Editor / SO
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/*
+!.vscode/extensions.json
+
+# Playwright MCP
+.playwright-mcp
