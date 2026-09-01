@@ -15,6 +15,13 @@ import { carta as cartaBase } from '../data/carta'
 
 const IDIOMAS_DESTINO = ['en', 'pt']
 const CACHE_KEY = `pinchoscana-carta:${CLAVE_CARTA}`
+// Ajustes globales de la carta (visibles para todas las mesas). Viven en su
+// propia fila de `site_content` para no tocar la forma de la carta (un array).
+const CLAVE_AJUSTES = `${CLAVE_CARTA}:ajustes`
+const AJUSTES_CACHE_KEY = `pinchoscana-ajustes:${CLAVE_CARTA}`
+// Por defecto las medias raciones vienen ocultas: el dueño las enseña con el
+// interruptor de admin. Los montados de Bocadillos no dependen de esto.
+const MOSTRAR_MEDIAS_DEFECTO = false
 // Cuenta gratuita de MyMemory: identificarse sube el límite a 50k chars/día.
 const MYMEMORY_EMAIL = 'villorinaangelandres@gmail.com'
 
@@ -55,12 +62,31 @@ const escribirCache = (valor) => {
   }
 }
 
+const leerAjustesCache = () => {
+  try {
+    const crudo = localStorage.getItem(AJUSTES_CACHE_KEY)
+    return crudo === null ? null : JSON.parse(crudo) === true
+  } catch {
+    return null
+  }
+}
+
+const escribirAjustesCache = (valor) => {
+  try {
+    localStorage.setItem(AJUSTES_CACHE_KEY, JSON.stringify(valor))
+  } catch {
+    /* no es crítico */
+  }
+}
+
 const AdminContext = createContext(null)
 
 export function AdminProvider({ children }) {
   const [admin, setAdmin] = useState(false)
   // Arranca con la última carta vista en este móvil; si no hay, con la semilla
   const [cartaData, setCartaData] = useState(() => leerCache() ?? cartaBase)
+  // ¿Se muestran las medias raciones a los clientes? Ajuste global sincronizado
+  const [mostrarMedias, setMostrarMedias] = useState(() => leerAjustesCache() ?? MOSTRAR_MEDIAS_DEFECTO)
   // Tras el login se ve la web normal; este flag activa el editor
   const [editando, setEditando] = useState(false)
 
@@ -81,16 +107,23 @@ export function AdminProvider({ children }) {
     }
   }, [])
 
-  // Carga inicial de la carta publicada
+  // Carga inicial de la carta publicada y de los ajustes globales
   useEffect(() => {
     let vivo = true
     getSupabase().then(async (sb) => {
       if (!sb) return
-      const { data, error } = await sb.from('site_content').select('value').eq('key', CLAVE_CARTA).maybeSingle()
-      if (!vivo) return
-      if (!error && Array.isArray(data?.value) && data.value.length) {
-        setCartaData(data.value)
-        escribirCache(data.value)
+      const { data, error } = await sb.from('site_content').select('key,value').in('key', [CLAVE_CARTA, CLAVE_AJUSTES])
+      if (!vivo || error || !data) return
+      const filaCarta = data.find((f) => f.key === CLAVE_CARTA)
+      if (Array.isArray(filaCarta?.value) && filaCarta.value.length) {
+        setCartaData(filaCarta.value)
+        escribirCache(filaCarta.value)
+      }
+      const filaAjustes = data.find((f) => f.key === CLAVE_AJUSTES)
+      if (filaAjustes?.value && typeof filaAjustes.value === 'object') {
+        const v = !!filaAjustes.value.mostrarMedias
+        setMostrarMedias(v)
+        escribirAjustesCache(v)
       }
     })
     return () => {
@@ -108,9 +141,14 @@ export function AdminProvider({ children }) {
         .channel('site_content-cambios')
         .on('postgres_changes', { event: '*', schema: 'public', table: 'site_content' }, (payload) => {
           const fila = payload.new
-          if (fila && fila.key === CLAVE_CARTA && Array.isArray(fila.value)) {
+          if (!fila) return
+          if (fila.key === CLAVE_CARTA && Array.isArray(fila.value)) {
             setCartaData(fila.value)
             escribirCache(fila.value)
+          } else if (fila.key === CLAVE_AJUSTES && fila.value && typeof fila.value === 'object') {
+            const v = !!fila.value.mostrarMedias
+            setMostrarMedias(v)
+            escribirAjustesCache(v)
           }
         })
         .subscribe()
@@ -162,6 +200,33 @@ export function AdminProvider({ children }) {
     return true
   }
 
+  const escribirAjustesRemoto = async (valor) => {
+    const sb = await getSupabase()
+    if (!sb) {
+      toast(t('admin.soloLocal'), { id: 'local' })
+      return false
+    }
+    const { error } = await sb
+      .from('site_content')
+      .upsert({ key: CLAVE_AJUSTES, value: { mostrarMedias: valor }, updated_at: new Date().toISOString() })
+    if (error) {
+      toast.error(t('admin.sinConexion'), { id: 'guardar-error' })
+      return false
+    }
+    return true
+  }
+
+  // Interruptor de admin: enseña u oculta las medias raciones en todas las mesas
+  const alternarMedias = () => {
+    setMostrarMedias((prev) => {
+      const v = !prev
+      escribirAjustesCache(v)
+      escribirAjustesRemoto(v)
+      toast.success(t(v ? 'admin.mediasActivadas' : 'admin.mediasDesactivadas'), { id: 'medias' })
+      return v
+    })
+  }
+
   // Acepta valor directo o función (prev) => nuevo, para que las
   // actualizaciones asíncronas (traducciones) no pisen cambios recientes.
   const guardarCarta = (nueva) => {
@@ -201,9 +266,11 @@ export function AdminProvider({ children }) {
       campoTraducido,
       editando,
       setEditando,
+      mostrarMedias,
+      alternarMedias,
       haySupabase,
     }),
-    [admin, cartaData, editando]
+    [admin, cartaData, editando, mostrarMedias]
   )
 
   return <AdminContext.Provider value={valor}>{children}</AdminContext.Provider>

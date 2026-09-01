@@ -9,7 +9,8 @@ import { Separador } from './Ornamentos'
 
 export default function Carta() {
   const { t, i18n } = useTranslation()
-  const { admin, cartaData, guardarCarta, campoTraducido, editando, setEditando, guardar } = useAdmin()
+  const { admin, cartaData, guardarCarta, campoTraducido, editando, setEditando, guardar, mostrarMedias, alternarMedias } =
+    useAdmin()
   const enEdicion = admin && editando
 
   const lang = idiomaCorto(i18n.language)
@@ -175,6 +176,33 @@ export default function Carta() {
           <Separador className="w-full" />
         </header>
 
+        {/* Interruptor de medias: solo lo ve el dueño tras iniciar sesión */}
+        {admin && (
+          <div className="reveal mb-6 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-tinta-900/15 bg-papel-50/80 px-4 py-3">
+            <div className="flex flex-col">
+              <span className="font-cond text-[0.72rem] uppercase tracking-[0.2em] text-tinta-800">
+                {t('admin.mediasEtiqueta')}
+              </span>
+              <span className="font-body text-xs italic text-tinta-600">
+                {mostrarMedias ? t('admin.mediasVisibles') : t('admin.mediasOcultas')}
+              </span>
+            </div>
+            <button
+              onClick={alternarMedias}
+              role="switch"
+              aria-checked={mostrarMedias}
+              className={`flex items-center gap-2 rounded-full border px-4 py-2 font-cond text-[0.72rem] uppercase tracking-[0.16em] transition-colors ${
+                mostrarMedias
+                  ? 'border-tinta-900/20 text-tinta-700 hover:border-teja-500 hover:text-teja-600'
+                  : 'border-teja-500 bg-teja-500 text-papel-50 hover:bg-teja-400'
+              }`}
+            >
+              <span className={`h-2 w-2 rounded-full ${mostrarMedias ? 'bg-teja-500' : 'bg-papel-50'}`} aria-hidden="true" />
+              {mostrarMedias ? t('admin.desactivarMedias') : t('admin.activarMedias')}
+            </button>
+          </div>
+        )}
+
         {!enEdicion && ids.length > 1 && (
           <div className="reveal mb-2 flex justify-end">
             <button
@@ -204,6 +232,7 @@ export default function Carta() {
               acciones={acciones}
               abierta={abiertas.has(cat.id)}
               alAlternar={() => alternar(cat.id)}
+              ocultarMedias={!mostrarMedias && cat.id !== 'bocadillos'}
             />
           ))}
         </div>

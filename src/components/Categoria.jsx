@@ -20,7 +20,7 @@ const inputBase =
 
 const soloEs = (v) => (v && typeof v === 'object' ? (v.es ?? '') : (v ?? ''))
 
-export default function Categoria({ cat, indice, abierta, alAlternar, L, admin, acciones }) {
+export default function Categoria({ cat, indice, abierta, alAlternar, L, admin, acciones, ocultarMedias = false }) {
   const { t } = useTranslation()
   const { titulo, cabeceraPrecio, platos } = cat
   const numero = String(indice).padStart(2, '0')
@@ -96,7 +96,7 @@ export default function Categoria({ cat, indice, abierta, alAlternar, L, admin, 
       >
         <div className="min-h-0 overflow-hidden">
           <div className="pb-8">
-            {cabeceraPrecio && !admin && (
+            {cabeceraPrecio && !admin && !ocultarMedias && (
               <p className="mb-4 text-right font-cond text-[0.66rem] uppercase tracking-[0.24em] text-teja-500">
                 {L(cabeceraPrecio)}
               </p>
@@ -115,21 +115,22 @@ export default function Categoria({ cat, indice, abierta, alAlternar, L, admin, 
                 const platoId = p.id ?? i
 
                 if (!admin) {
+                  const verMedia = Boolean(p.precioMedia) && !ocultarMedias
                   return (
                     <li key={platoId} className="reveal" style={{ '--d': `${Math.min(i, 10) * 45}ms` }}>
                       <div className="flex items-baseline">
                         <span className="font-body text-[1.02rem] leading-snug text-tinta-900 sm:text-[1.08rem]">
                           {L(p.nombre)}
                         </span>
-                        {(p.precio || p.precioMedia) && <span className="leader" aria-hidden="true" />}
-                        {(p.precio || p.precioMedia) && (
+                        {(p.precio || verMedia) && <span className="leader" aria-hidden="true" />}
+                        {(p.precio || verMedia) && (
                           <span className="flex shrink-0 flex-col items-end leading-tight">
                             {p.precio && (
                               <span className="tabular font-cond text-[1.05rem] font-medium text-tinta-900">
                                 {L(p.precio)}
                               </span>
                             )}
-                            {p.precioMedia && (
+                            {verMedia && (
                               <span className="tabular mt-0.5 font-cond text-[0.72rem] uppercase tracking-[0.1em] text-teja-500">
                                 {t('carta.media')} {L(p.precioMedia)}
                               </span>

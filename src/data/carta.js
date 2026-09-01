@@ -15,6 +15,7 @@ export const carta = [
   {
     id: 'raciones',
     titulo: { es: 'Raciones', en: 'Sharing Plates', pt: 'Doses' },
+    cabeceraPrecio: { es: 'Ración · Media', en: 'Full · Half', pt: 'Dose · Meia' },
     platos: [
       {
         id: 'rac-01',
@@ -25,42 +26,50 @@ export const carta = [
         id: 'rac-02',
         nombre: { es: 'Pluma con patatas', en: 'Iberian pluma with fries', pt: 'Pluma ibérica com batatas' },
         precio: '16,00 €',
+        precioMedia: '9,00 €',
       },
       {
         id: 'rac-03',
         nombre: { es: 'Secreto con patatas', en: 'Iberian secreto with fries', pt: 'Secreto ibérico com batatas' },
         precio: '16,00 €',
+        precioMedia: '9,00 €',
       },
       {
         id: 'rac-04',
         nombre: { es: 'Solomillo con patatas', en: 'Pork tenderloin with fries', pt: 'Lombinho de porco com batatas' },
         precio: '16,00 €',
+        precioMedia: '9,00 €',
       },
       {
         id: 'rac-05',
         nombre: { es: 'Carne a la brasa', en: 'Chargrilled meat', pt: 'Carne na brasa' },
         precio: '16,00 €',
+        precioMedia: '9,00 €',
       },
       {
         id: 'rac-06',
         nombre: { es: 'Jamón ibérico', en: 'Iberian cured ham', pt: 'Presunto ibérico' },
         precio: '18,00 €',
+        precioMedia: '10,00 €',
       },
       {
         id: 'rac-07',
         nombre: { es: 'Queso', en: 'Cheese', pt: 'Queijo' },
         desc: { es: 'De oveja o de cabra.', en: 'Sheep or goat.', pt: 'De ovelha ou de cabra.' },
         precio: '17,00 €',
+        precioMedia: '9,50 €',
       },
       {
         id: 'rac-08',
         nombre: { es: 'Calamares', en: 'Fried squid', pt: 'Lulas fritas' },
         precio: '16,00 €',
+        precioMedia: '9,00 €',
       },
       {
         id: 'rac-09',
         nombre: { es: 'Rejos', en: 'Octopus tentacles', pt: 'Tentáculos de polvo' },
         precio: '16,00 €',
+        precioMedia: '9,00 €',
       },
       {
         id: 'rac-10',
@@ -72,16 +81,19 @@ export const carta = [
   {
     id: 'patatas',
     titulo: { es: 'Patatas', en: 'Fries', pt: 'Batatas' },
+    cabeceraPrecio: { es: 'Ración · Media', en: 'Full · Half', pt: 'Dose · Meia' },
     platos: [
       {
         id: 'pat-01',
         nombre: { es: 'Patatas fritas', en: 'French fries', pt: 'Batatas fritas' },
         precio: '7,00 €',
+        precioMedia: '4,00 €',
       },
       {
         id: 'pat-02',
         nombre: { es: 'Patatas fritas con pimientos', en: 'Fries with peppers', pt: 'Batatas fritas com pimentos' },
         precio: '10,00 €',
+        precioMedia: '6,00 €',
       },
       {
         id: 'pat-03',
@@ -91,11 +103,13 @@ export const carta = [
           pt: 'Batatas fritas com pimentos e chouriço picante',
         },
         precio: '12,00 €',
+        precioMedia: '7,00 €',
       },
       {
         id: 'pat-04',
         nombre: { es: 'Patatas con beicon y queso', en: 'Fries with bacon and cheese', pt: 'Batatas com bacon e queijo' },
         precio: '14,00 €',
+        precioMedia: '8,00 €',
       },
     ],
   },
