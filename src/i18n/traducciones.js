@@ -13,7 +13,7 @@ export const es = {
     categorias: 'Categorías de la carta',
   },
   hero: {
-    entradilla: 'Carne a la brasa, pinchos y bocadillos recién hechos. Pide la ración entera o la media, como te apetezca.',
+    entradilla: 'Carne a la brasa, pinchos y bocadillos recién hechos, para compartir.',
     verCarta: 'Ver la carta',
     sello: 'Brasa · Pinchos · Caseta',
   },
@@ -115,7 +115,7 @@ export const en = {
     categorias: 'Menu categories',
   },
   hero: {
-    entradilla: 'Chargrilled meat, skewers and freshly made baguettes. Order a full portion or a half — whatever you fancy.',
+    entradilla: 'Chargrilled meat, skewers and freshly made baguettes to share.',
     verCarta: 'See the menu',
     sello: 'Grill · Skewers · Stand',
   },
@@ -217,7 +217,7 @@ export const pt = {
     categorias: 'Categorias da ementa',
   },
   hero: {
-    entradilla: 'Carne na brasa, espetadas e sandes feitas na hora. Peça a dose inteira ou meia, como preferir.',
+    entradilla: 'Carne na brasa, espetadas e sandes feitas na hora, para partilhar.',
     verCarta: 'Ver a ementa',
     sello: 'Brasa · Espetadas · Barraca',
   },
