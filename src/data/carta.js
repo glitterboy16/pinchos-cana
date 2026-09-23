@@ -81,6 +81,11 @@ export const carta = [
         nombre: { es: 'Ensalada', en: 'Mixed salad', pt: 'Salada' },
         precio: '8,00 €',
       },
+      {
+        id: 'rac-11',
+        nombre: { es: 'Cochifrito', en: 'Cochifrito', pt: 'Cochifrito' },
+        precio: '16,00 €',
+      },
     ],
   },
   {
