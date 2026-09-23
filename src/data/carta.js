@@ -82,6 +82,11 @@ export const carta = [
         precio: '8,00 €',
       },
       {
+        id: 'p-1788546119573',
+        nombre: { es: 'Pestorejo', en: 'Eyelash', pt: 'Cílios' },
+        precio: '16,00 €',
+      },
+      {
         id: 'rac-11',
         nombre: { es: 'Cochifrito', en: 'Cochifrito', pt: 'Cochifrito' },
         precio: '16,00 €',

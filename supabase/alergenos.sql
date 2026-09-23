@@ -26,7 +26,9 @@ with mapa(m) as (
     "pic-03": ["gluten", "mostaza", "sulfitos"],
     "pic-04": ["sulfitos"],
     "beb-01": ["gluten"],
-    "beb-02": ["gluten"]
+    "beb-02": ["gluten"],
+    "p-1788281236712": ["gluten", "lacteos", "apio"],
+    "p-1788281451785": ["gluten", "lacteos", "apio"]
   }'::jsonb)
 )
 update site_content sc
