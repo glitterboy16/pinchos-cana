@@ -42,8 +42,9 @@ set
         ), '[]'::jsonb)
         from jsonb_array_elements(cat->'platos') as plato
       ))
-      from jsonb_array_elements(sc.value) as cat
-    ),
+    )
+    from jsonb_array_elements(sc.value) as cat
+  ),
     updated_at = now()
 from mapa
 where sc.key = 'carta_pinchos_cana';
