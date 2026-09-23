@@ -36,7 +36,7 @@ set
       cat || jsonb_build_object('platos', (
         select coalesce(jsonb_agg(
           case
-            when m ? (plato->>'id') then plato || jsonb_build_object('alergenos', m -> (plato->>'id'))
+            when jsonb_exists(m, plato->>'id') then plato || jsonb_build_object('alergenos', m -> (plato->>'id'))
             else plato - 'alergenos'
           end
         ), '[]'::jsonb)
