@@ -88,7 +88,7 @@ export function construirPdf({ carta, lang, recursos: r, mostrarMedias = true })
     hy += 4
     doc.setDrawColor(...TEJA).setLineWidth(0.3)
     doc.line(A4.w / 2 - 22, hy, A4.w / 2 + 22, hy)
-    return hy + 7
+    return hy + 5
   }
 
   const iniciarPagina = (primera) => {
@@ -120,7 +120,7 @@ export function construirPdf({ carta, lang, recursos: r, mostrarMedias = true })
 
   // Alto estimado de una categoría, para no partirla entre columnas si cabe entera.
   const altoCategoria = (cat) => {
-    let h = (muestraCabecera(cat) ? 3.4 : 0) + 7
+    let h = (muestraCabecera(cat) ? 3 : 0) + 6
     for (const p of cat.platos) {
       doc.setFont('LoraSemi', 'normal').setFontSize(9.5)
       const ap = p.precio ? doc.getTextWidth(String(L(p.precio))) + 3 : 0
@@ -131,21 +131,25 @@ export function construirPdf({ carta, lang, recursos: r, mostrarMedias = true })
         doc.setFont('Lora', 'italic').setFontSize(7.6)
         dl = doc.splitTextToSize(String(L(p.desc)), COL_W - 6).length
       }
-      h += nl * 4.3 + (muestraMedia(cat, p) ? 2.2 : 0) + dl * 3.3 + (p.alergenos?.length ? 3.8 : 0) + 2.4
+      h += nl * 4.3 + (muestraMedia(cat, p) ? 2.2 : 0) + dl * 3.3 + (p.alergenos?.length ? 3.8 : 0) + 2.0
     }
-    return h + 4.5
+    return h + 3.5
   }
 
   // ── Categorías ────────────────────────────────────────────────────────
   for (const cat of carta) {
     if (!cat.platos?.length) continue
-    // Si la categoría entera cabe en una columna pero no en el hueco que queda,
-    // salta de columna antes de empezar para no dividirla.
+    // Si una categoría entera cabe en una columna y aún no hemos llenado la
+    // primera, la mantenemos junta; si no, se deja fluir (partir) para no
+    // desperdiciar el fondo de la columna. Así las columnas quedan parejas.
     const alto = altoCategoria(cat)
-    if (y + alto > SUELO && alto <= SUELO - topCol) saltar()
-    else necesita(20)
+    const hueco = SUELO - y
+    // Salta de columna solo si queda poco hueco (para no orfanar el título); si
+    // queda espacio decente, deja fluir/partir para llenar bien la columna.
+    if (alto > hueco && alto <= SUELO - topCol && hueco < 30) saltar()
+    else necesita(18)
 
-    doc.setFont('LoraSemi', 'normal').setFontSize(12.5).setTextColor(...TINTA).setCharSpace(1.2)
+    doc.setFont('LoraSemi', 'normal').setFontSize(12).setTextColor(...TINTA).setCharSpace(1.1)
     doc.text(String(L(cat.titulo) ?? '').toUpperCase(), izq(), y)
     doc.setCharSpace(0)
     doc.setDrawColor(...TEJA).setLineWidth(0.2).setLineDashPattern([], 0)
@@ -154,9 +158,9 @@ export function construirPdf({ carta, lang, recursos: r, mostrarMedias = true })
     if (muestraCabecera(cat)) {
       doc.setFont('Lora', 'italic').setFontSize(7.5).setTextColor(...TEJA)
       doc.text(String(L(cat.cabeceraPrecio)), der(), y + 6.4, { align: 'right' })
-      y += 3.4
+      y += 3
     }
-    y += 7
+    y += 6
 
     for (const p of cat.platos) {
       const nombre = String(L(p.nombre) ?? '')
@@ -221,9 +225,9 @@ export function construirPdf({ carta, lang, recursos: r, mostrarMedias = true })
         }
         y += s + 0.5
       }
-      y += 2.4
+      y += 2.0
     }
-    y += 4.5
+    y += 3.5
   }
 
   // ── Alérgenos ─────────────────────────────────────────────────────────
@@ -233,10 +237,10 @@ export function construirPdf({ carta, lang, recursos: r, mostrarMedias = true })
   doc.setCharSpace(0)
   doc.setDrawColor(...TEJA).setLineWidth(0.2)
   doc.line(izq(), y + 2.6, der(), y + 2.6)
-  y += 9
+  y += 7.5
 
   const celda = COL_W / 2
-  const filaH = 5.4
+  const filaH = 5.0
   const icoS = 4.2
   for (let i = 0; i < ALERGENOS.length; i += 2) {
     necesita(filaH)
