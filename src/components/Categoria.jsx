@@ -1,5 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import EditableField from './EditableField'
+import AlergenoIcono from './AlergenoIcono'
+import { ALERGENOS, ALERGENOS_POR_ID } from '../data/alergenos'
 
 const Chevron = ({ className = '' }) => (
   <svg viewBox="0 0 24 24" fill="none" strokeWidth="1.6" className={`h-5 w-5 stroke-current ${className}`} aria-hidden="true">
@@ -143,6 +145,18 @@ export default function Categoria({ cat, indice, abierta, alAlternar, L, admin, 
                           {L(p.desc)}
                         </p>
                       )}
+                      {p.alergenos?.length > 0 && (
+                        <ul className="mt-1.5 flex flex-wrap items-center gap-1.5" aria-label={t('carta.alergenosTitulo')}>
+                          {p.alergenos.map(
+                            (aid) =>
+                              ALERGENOS_POR_ID[aid] && (
+                                <li key={aid} title={L(ALERGENOS_POR_ID[aid].nombre)}>
+                                  <AlergenoIcono id={aid} className="h-[1.15rem] w-[1.15rem]" />
+                                </li>
+                              )
+                          )}
+                        </ul>
+                      )}
                     </li>
                   )
                 }
@@ -185,6 +199,32 @@ export default function Categoria({ cat, indice, abierta, alAlternar, L, admin, 
                       placeholder={t('admin.phDesc')}
                       onCommit={(v) => acciones.editarDesc(cat.id, platoId, v)}
                     />
+                    <div className="mt-3 border-t border-tinta-900/10 pt-2.5">
+                      <p className="mb-1.5 font-cond text-[0.6rem] uppercase tracking-[0.18em] text-tinta-500">
+                        {t('admin.alergenos')}
+                      </p>
+                      <div className="flex flex-wrap gap-1.5">
+                        {ALERGENOS.map((a) => {
+                          const activo = p.alergenos?.includes(a.id)
+                          return (
+                            <button
+                              key={a.id}
+                              type="button"
+                              onClick={() => acciones.alternarAlergeno(cat.id, platoId, a.id)}
+                              aria-pressed={activo}
+                              className={`flex items-center gap-1 rounded-full border px-2 py-1 font-body text-[0.68rem] transition-colors ${
+                                activo
+                                  ? 'border-teja-500 bg-teja-500/10 text-teja-700'
+                                  : 'border-tinta-900/15 text-tinta-500 hover:border-teja-400 hover:text-tinta-700'
+                              }`}
+                            >
+                              <AlergenoIcono id={a.id} className="h-3.5 w-3.5" />
+                              <span>{soloEs(a.nombre)}</span>
+                            </button>
+                          )
+                        })}
+                      </div>
+                    </div>
                   </li>
                 )
               })}

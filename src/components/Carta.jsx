@@ -5,6 +5,7 @@ import { useAdmin } from '../admin/AdminContext'
 import { idiomaCorto } from '../i18n'
 import { confirmarToast } from '../lib/confirmToast'
 import Categoria from './Categoria'
+import Alergenos from './Alergenos'
 import { Separador } from './Ornamentos'
 
 export default function Carta() {
@@ -102,6 +103,14 @@ export default function Carta() {
     editarPrecio: (catId, platoId, texto) => setPlato(catId, platoId, (p) => ({ ...p, precio: texto || undefined })),
     editarPrecioMedia: (catId, platoId, texto) =>
       setPlato(catId, platoId, (p) => ({ ...p, precioMedia: texto || undefined })),
+    alternarAlergeno: (catId, platoId, alergId) =>
+      setPlato(catId, platoId, (p) => {
+        const actuales = p.alergenos ?? []
+        const nuevos = actuales.includes(alergId)
+          ? actuales.filter((x) => x !== alergId)
+          : [...actuales, alergId]
+        return { ...p, alergenos: nuevos.length ? nuevos : undefined }
+      }),
     anadirPlato: (catId) => {
       setCategoria(catId, (c) => ({
         ...c,
@@ -245,6 +254,8 @@ export default function Carta() {
             {t('admin.anadirCategoria')}
           </button>
         )}
+
+        {!enEdicion && <Alergenos />}
 
         <p className="reveal mt-14 text-center font-body text-sm italic leading-relaxed text-tinta-600">
           {t('carta.nota')}

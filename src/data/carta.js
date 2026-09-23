@@ -19,6 +19,7 @@ export const carta = [
     platos: [
       {
         id: 'rac-01',
+        alergenos: ['crustaceos'],
         nombre: { es: 'Plato de gambas', en: 'Prawns', pt: 'Gambas' },
         precio: '7,00 €',
       },
@@ -54,6 +55,7 @@ export const carta = [
       },
       {
         id: 'rac-07',
+        alergenos: ['lacteos'],
         nombre: { es: 'Queso', en: 'Cheese', pt: 'Queijo' },
         desc: { es: 'De oveja o de cabra.', en: 'Sheep or goat.', pt: 'De ovelha ou de cabra.' },
         precio: '17,00 €',
@@ -61,18 +63,21 @@ export const carta = [
       },
       {
         id: 'rac-08',
+        alergenos: ['gluten', 'moluscos', 'huevos'],
         nombre: { es: 'Calamares', en: 'Fried squid', pt: 'Lulas fritas' },
         precio: '16,00 €',
         precioMedia: '9,00 €',
       },
       {
         id: 'rac-09',
+        alergenos: ['pescado', 'gluten'],
         nombre: { es: 'Rejos', en: 'Octopus tentacles', pt: 'Tentáculos de polvo' },
         precio: '16,00 €',
         precioMedia: '9,00 €',
       },
       {
         id: 'rac-10',
+        alergenos: ['mostaza'],
         nombre: { es: 'Ensalada', en: 'Mixed salad', pt: 'Salada' },
         precio: '8,00 €',
       },
@@ -97,6 +102,7 @@ export const carta = [
       },
       {
         id: 'pat-03',
+        alergenos: ['sulfitos'],
         nombre: {
           es: 'Patatas fritas con pimientos y chorizo picante',
           en: 'Fries with peppers and spicy chorizo',
@@ -107,6 +113,7 @@ export const carta = [
       },
       {
         id: 'pat-04',
+        alergenos: ['lacteos', 'sulfitos'],
         nombre: { es: 'Patatas con beicon y queso', en: 'Fries with bacon and cheese', pt: 'Batatas com bacon e queijo' },
         precio: '14,00 €',
         precioMedia: '8,00 €',
@@ -124,6 +131,7 @@ export const carta = [
       },
       {
         id: 'pin-02',
+        alergenos: ['sulfitos'],
         nombre: { es: 'Pincho de chorizo picante', en: 'Spicy chorizo skewer', pt: 'Espetada de chouriço picante' },
         precio: '3,50 €',
       },
@@ -136,11 +144,13 @@ export const carta = [
     platos: [
       {
         id: 'boc-01',
+        alergenos: ['gluten'],
         nombre: { es: 'Serranito o jamón', en: 'Serranito or cured ham', pt: 'Serranito ou presunto' },
         precio: '9,00 €',
       },
       {
         id: 'boc-02',
+        alergenos: ['gluten', 'lacteos', 'moluscos', 'pescado'],
         nombre: { es: 'Queso curado, calamares o rejos', en: 'Cured cheese, squid or octopus', pt: 'Queijo curado, lulas ou polvo' },
         desc: { es: 'Extras 0,50 €.', en: 'Extras €0.50.', pt: 'Extras 0,50 €.' },
         precio: '8,00 €',
@@ -148,6 +158,7 @@ export const carta = [
       },
       {
         id: 'boc-03',
+        alergenos: ['gluten'],
         nombre: {
           es: 'Filete de lomo, filete de pollo o beicon',
           en: 'Pork loin, chicken fillet or bacon',
@@ -165,21 +176,25 @@ export const carta = [
     platos: [
       {
         id: 'pic-01',
+        alergenos: ['lacteos'],
         nombre: { es: 'Tapa de jamón o queso', en: 'Ham or cheese tapa', pt: 'Tapa de presunto ou queijo' },
         precio: '5,00 €',
       },
       {
         id: 'pic-02',
+        alergenos: ['gluten', 'huevos', 'lacteos', 'mostaza'],
         nombre: { es: 'Hamburguesa mixta', en: 'Mixed burger', pt: 'Hambúrguer misto' },
         precio: '5,00 €',
       },
       {
         id: 'pic-03',
+        alergenos: ['gluten', 'mostaza', 'sulfitos'],
         nombre: { es: 'Perrito', en: 'Hot dog', pt: 'Cachorro-quente' },
         precio: '3,50 €',
       },
       {
         id: 'pic-04',
+        alergenos: ['sulfitos'],
         nombre: { es: 'Salchipapa', en: 'Salchipapa', pt: 'Salchipapa' },
         desc: { es: 'Patatas con salchicha.', en: 'Fries with sausage.', pt: 'Batatas com salsicha.' },
         precio: '4,00 €',
@@ -197,11 +212,13 @@ export const carta = [
     platos: [
       {
         id: 'beb-01',
+        alergenos: ['gluten'],
         nombre: { es: 'Refrescos y tercios', en: 'Soft drinks & bottled beer', pt: 'Refrigerantes e cervejas' },
         precio: '3,00 €',
       },
       {
         id: 'beb-02',
+        alergenos: ['gluten'],
         nombre: { es: 'Tubos', en: 'Draught beer', pt: 'Cerveja de pressão' },
         precio: '2,50 €',
       },

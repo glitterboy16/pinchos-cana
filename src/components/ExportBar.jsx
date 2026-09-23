@@ -8,7 +8,7 @@ import { IDIOMAS } from '../i18n'
 // idiomas. jsPDF se carga solo cuando hace falta.
 export default function ExportBar() {
   const { t } = useTranslation()
-  const { cartaData } = useAdmin()
+  const { cartaData, mostrarMedias } = useAdmin()
   const [abierto, setAbierto] = useState(false)
   const [exportando, setExportando] = useState(false)
   const ref = useRef(null)
@@ -32,7 +32,7 @@ export default function ExportBar() {
     setExportando(true)
     try {
       const { exportarCartaPdf } = await import('../export/exportarPdf')
-      await toast.promise(exportarCartaPdf(cartaData, lang), {
+      await toast.promise(exportarCartaPdf(cartaData, lang, mostrarMedias), {
         loading: t('exportar.generando'),
         success: t('exportar.pdfOk'),
         error: t('exportar.pdfError'),
